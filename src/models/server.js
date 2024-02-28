@@ -1,7 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import dbConnection from '../db/config';
-import routerUser from '../routes/user.routes';
+import routerUser from '../routes/users.routes';
+import routerAuth from '../routes/auth.routes';
 class Server{
     constructor(){
         this.app = express()
@@ -31,7 +32,7 @@ class Server{
         // this.app.use( express.static('public') )
     }
     routes(){
-        // this.app.use(this.paths.auth, require('../routes/auth.routes'))
+        this.app.use(this.paths.auth, routerAuth)
         // this.app.use(this.paths.categorys, require('../routes/categorys.routes'))
         this.app.use(this.paths.users, routerUser)
         // this.app.use(this.paths.products, require('../routes/productos.routes'))
