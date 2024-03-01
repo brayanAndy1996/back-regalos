@@ -26,8 +26,8 @@ const getUsers = async(req, res) => {
 
 const createUser = async (req, res = response) => {
     try {
-        const { nroDoc, tipoDoc, nombreCom, rol, email, password, telefono, direccion, fechaNac, sexo, ambiente  } = req.body;
-        const usuario = new Usuario({ nroDoc, tipoDoc, nombreCom, rol, email, password, telefono, direccion, fechaNac, sexo, ambiente });
+        const { nroDoc, tipoDoc, nombreCom, role, email, password, telefono, direccion, fechaNac, sexo, ambiente  } = req.body;
+        const usuario = new Usuario({ nroDoc, tipoDoc, nombreCom, role, email, password, telefono, direccion, fechaNac, sexo, ambiente });
         
         //Encriptar la contraseña
         if(password){

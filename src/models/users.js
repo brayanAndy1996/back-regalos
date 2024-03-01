@@ -48,8 +48,9 @@ const UsuariosSchema = Schema({
         type: Boolean,
         default: true
     },
-    rol: [{
-        type: String,
+    role: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Role',
         required: true
     }],
 })

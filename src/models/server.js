@@ -3,15 +3,17 @@ import cors from 'cors';
 import dbConnection from '../db/config';
 import routerUser from '../routes/users.routes';
 import routerAuth from '../routes/auth.routes';
+import routerRole from '../routes/roles.routes';
+import routerPermission from '../routes/permissions.routes';
 class Server{
     constructor(){
         this.app = express()
         this.port = process.env.PORT || 3000
         this.paths = {
             auth:       '/api/auth',
-            categorys:  '/api/categorys',
-            products:   '/api/products',
-            users:      '/api/users'
+            users:      '/api/users',
+            roles:      '/api/roles',
+            permissions:'/api/permissions'
         }
         //Conectar db
         this.conectarDb()
@@ -33,10 +35,9 @@ class Server{
     }
     routes(){
         this.app.use(this.paths.auth, routerAuth)
-        // this.app.use(this.paths.categorys, require('../routes/categorys.routes'))
         this.app.use(this.paths.users, routerUser)
-        // this.app.use(this.paths.products, require('../routes/productos.routes'))
-
+        this.app.use(this.paths.roles, routerRole)
+        this.app.use(this.paths.permissions, routerPermission)
     }
     listen(){
         this.app.listen( this.port, ()=>{

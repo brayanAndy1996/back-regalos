@@ -1,5 +1,5 @@
-import Usuarios from '../models/users';
-import { validateEmailFormat } from './expression-regular';
+import Usuarios from '../../models/users';
+import { validateEmailFormat } from '../expression-regular';
 
 const validateEmail = async ( email = '' ) => {
     if ( !email ) return
