@@ -1,5 +1,5 @@
 import { response } from "express";
-import Permission from "../models/Permission";
+import Permission from "../models/permission";
 
 const getAllPermissions = async (req, res = response) => {
     try {
