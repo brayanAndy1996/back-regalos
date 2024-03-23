@@ -8,7 +8,7 @@ const router = Router()
 
 router.get('/get-all-roles',
 [
-    // validarjWT,
+    validarjWT,
     // isHaveRole('ADMIN'),
     // validarCampos
 
@@ -16,7 +16,7 @@ router.get('/get-all-roles',
 
 router.post('/create-role', 
 [
-    // validarjWT,
+    validarjWT,
     // isHaveRole('ADMIN'),
     check('name', 'El nombre es obligatorio').not().isEmpty(),
     check('code', 'Los codigos son obligatorios').not().isEmpty(),
@@ -27,7 +27,7 @@ router.post('/create-role',
 
 router.put('/update-role/:codeParam',
 [
-    // validarjWT,
+    validarjWT,
     // isHaveRole('ADMIN'),
     check('permissions', 'Los permisos no son validos').optional().isMongoId(),
     validarCampos
@@ -35,7 +35,7 @@ router.put('/update-role/:codeParam',
 
 router.delete('/delete-role/:codeParam', 
 [
-    // validarjWT,
+    validarjWT,
     // isHaveRole('ADMIN'),
     validarCampos
 ], deleteRole)

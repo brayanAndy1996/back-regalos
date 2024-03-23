@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 
-const UsuariosSchema = Schema({
+const UsersSchema = Schema({
     nroDoc: {
         type: String,
         required: true
@@ -41,22 +41,22 @@ const UsuariosSchema = Schema({
     sexo: {
         type: String
     },
-    ambiente: {
-        type: String
-    },
+    ambiente: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Environment'
+    }],
     estado: {
         type: Boolean,
         default: true
     },
     role: [{
         type: Schema.Types.ObjectId,
-        ref: 'Role',
-        required: true
+        ref: 'Role'
     }],
 })
-UsuariosSchema.methods.toJSON = function(){
+UsersSchema.methods.toJSON = function(){
     const { __v, password, _id, ...user } = this.toObject()
     return {...user, uid: _id}
 }
 
-export default model( 'Usuarios', UsuariosSchema ); // This line is not necessary
+export default model( 'Users', UsersSchema ); // This line is not necessary

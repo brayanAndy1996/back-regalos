@@ -3,15 +3,15 @@ import {
     isValidateUserNoExist,
     isValidateUserExist
 } from "./user-validator"
-import { isValidatePermissionExist, isValidatePermissionNoExist } from "./permission-validator"
-import { isValidateRoleExist, isValidateRoleNoExist } from "./roles-validators"
+import { isValidatePermissionExist } from "./permission-validator"
+import { isValidateRoleExist } from "./roles-validators"
+import { isValidateEnvironmentExist } from "./environments-validators"
 
 export {
     validateEmail,
     isValidateUserNoExist,
     isValidateUserExist,
     isValidatePermissionExist,
-    isValidatePermissionNoExist,
     isValidateRoleExist,
-    isValidateRoleNoExist
+    isValidateEnvironmentExist
 }

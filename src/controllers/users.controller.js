@@ -11,6 +11,8 @@ const getUsers = async(req, res) => {
             Usuario.find(query)
                 .skip(Number(from))
                 .limit(Number(limit))
+                .populate('ambiente', 'name')
+                .populate('role', 'name')
         ]);
         res.status(200).json({
             total,
@@ -37,10 +39,11 @@ const createUser = async (req, res = response) => {
         
         //Guardar en DB
         await usuario.save();
+        const newUser = await Usuario.findOne({nroDoc, tipoDoc})
+                                .populate('ambiente', 'name')
+                                .populate('role', 'name');
         
-        res.status(200).json({
-            usuario
-        });
+        res.status(200).json(newUser);
     } catch (error) {
         console.log("🚀 ~ createUser ~ error:", error)
         res.status(500).json({
@@ -57,7 +60,9 @@ const updateUser = async (req, res = response) => {
             const salt = bcryptjs.genSaltSync();
             resto.password = bcryptjs.hashSync(password, salt);
         }
-        const usuario = await Usuario.findOneAndUpdate({nroDoc: nroDocParam, tipoDoc: tipoDocParam}, resto);
+        const usuario = await Usuario.findOneAndUpdate({nroDoc: nroDocParam, tipoDoc: tipoDocParam}, resto)
+                                    .populate('ambiente', 'name')
+                                    .populate('role', 'name');
         res.status(200).json({
             usuario
         });
@@ -72,10 +77,8 @@ const updateUser = async (req, res = response) => {
 const deleteUser = async (req, res = response) => {
     try {
         const { nroDocParam, tipoDocParam } = req.params;
-        const usuario = await Usuario.findOneAndUpdate({nroDoc: nroDocParam, tipoDoc: tipoDocParam}, {estado: false});
-        res.status(200).json({
-            usuario
-        });
+        const usuario = await Usuario.findOneAndUpdate({nroDoc: nroDocParam, tipoDoc: tipoDocParam}, {estado: false})
+        res.status(200).json(usuario);
     } catch (error) {
         console.log(error)
         res.status(500).json({

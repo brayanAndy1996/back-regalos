@@ -5,6 +5,8 @@ import routerUser from '../routes/users.routes';
 import routerAuth from '../routes/auth.routes';
 import routerRole from '../routes/roles.routes';
 import routerPermission from '../routes/permissions.routes';
+import routerEnvironment from '../routes/environments.routes';
+import routerAssistance from '../routes/assistance.routes';
 class Server{
     constructor(){
         this.app = express()
@@ -13,7 +15,9 @@ class Server{
             auth:       '/api/auth',
             users:      '/api/users',
             roles:      '/api/roles',
-            permissions:'/api/permissions'
+            permissions:'/api/permissions',
+            environments:'/api/environments',
+            routerAssistance:'/api/assistance'
         }
         //Conectar db
         this.conectarDb()
@@ -38,6 +42,8 @@ class Server{
         this.app.use(this.paths.users, routerUser)
         this.app.use(this.paths.roles, routerRole)
         this.app.use(this.paths.permissions, routerPermission)
+        this.app.use(this.paths.environments, routerEnvironment)
+        this.app.use(this.paths.routerAssistance, routerAssistance)
     }
     listen(){
         this.app.listen( this.port, ()=>{

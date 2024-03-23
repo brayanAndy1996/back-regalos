@@ -8,7 +8,7 @@ const router = Router()
 
 router.get('/get-all-permissions', 
 [
-    // validarjWT,
+    validarjWT,
     // isHaveRole('ADMIN'),
     // validarCampos
 
@@ -16,7 +16,7 @@ router.get('/get-all-permissions',
 
 router.post('/create-permission', 
 [
-    // validarjWT,
+    validarjWT,
     // isHaveRole('ADMIN'),
     check('name', 'El nombre es obligatorio').not().isEmpty(),
     check('code', 'El código es obligatorio').not().isEmpty(),
@@ -27,14 +27,14 @@ router.post('/create-permission',
 
 router.put('/update-permission/:codeParam', 
 [
-    // validarjWT,
+    validarjWT,
     // isHaveRole('ADMIN'),
     validarCampos
 ],updatePermission)
 
 router.delete('/delete-permission/:codeParam', 
 [
-    // validarjWT,
+    validarjWT,
     // isHaveRole('ADMIN'),
     validarCampos
 ],deletePermission)
