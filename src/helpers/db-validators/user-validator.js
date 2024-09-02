@@ -21,8 +21,14 @@ const isValidateUserNoExist = async (_, { req }) => {
     if ( !existeUsuario ) throw new Error(`El usuario con el documento ${ nroDocParam } y tipo ${ tipoDocParam } no existe`)
 }
 
+const isValidateUserExistById = async ( id ) => {
+    const existeUsuario = await Usuarios.findById( id )
+    if ( !existeUsuario ) throw new Error(`El usuario ${ id } no existe`)
+}
+
 export {
     validateEmail,
     isValidateUserNoExist,
-    isValidateUserExist
+    isValidateUserExist,
+    isValidateUserExistById
 }

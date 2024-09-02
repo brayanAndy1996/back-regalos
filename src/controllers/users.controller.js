@@ -11,8 +11,8 @@ const getUsers = async(req, res) => {
             Usuario.find(query)
                 .skip(Number(from))
                 .limit(Number(limit))
-                .populate('ambiente', 'name')
                 .populate('role', 'name')
+                .populate('ambienteActual', 'name')
         ]);
         res.status(200).json({
             total,
@@ -28,8 +28,8 @@ const getUsers = async(req, res) => {
 
 const createUser = async (req, res = response) => {
     try {
-        const { nroDoc, tipoDoc, nombreCom, role, email, password, telefono, direccion, fechaNac, sexo, ambiente  } = req.body;
-        const usuario = new Usuario({ nroDoc, tipoDoc, nombreCom, role, email, password, telefono, direccion, fechaNac, sexo, ambiente });
+        const { nroDoc, tipoDoc, nombreCom, role, email, password, telefono, direccion, fechaNac, sexo, ambienteActual  } = req.body;
+        const usuario = new Usuario({ nroDoc, tipoDoc, nombreCom, role, email, password, telefono, direccion, fechaNac, sexo, ambienteActual });
         
         //Encriptar la contraseña
         if(password){
@@ -40,8 +40,8 @@ const createUser = async (req, res = response) => {
         //Guardar en DB
         await usuario.save();
         const newUser = await Usuario.findOne({nroDoc, tipoDoc})
-                                .populate('ambiente', 'name')
-                                .populate('role', 'name');
+                                .populate('role', 'name')
+                                .populate('ambienteActual', 'name')
         
         res.status(200).json(newUser);
     } catch (error) {
@@ -61,7 +61,7 @@ const updateUser = async (req, res = response) => {
             resto.password = bcryptjs.hashSync(password, salt);
         }
         const usuario = await Usuario.findOneAndUpdate({nroDoc: nroDocParam, tipoDoc: tipoDocParam}, resto)
-                                    .populate('ambiente', 'name')
+                                    .populate('ambienteActual', 'name')
                                     .populate('role', 'name');
         res.status(200).json({
             usuario

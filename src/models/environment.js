@@ -1,33 +1,35 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model } from "mongoose";
 
 const EnvironmentSchema = Schema({
-    name: {
-        type: String,
-        required: true,
-        unique: true
+  name: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  description: {
+    text: String,
+    nivel: String,
+  },
+  daysClases: [String],
+  entryTime: {
+    type: Date,
+  },
+  departureTime: {
+    type: Date,
+  },
+  area: {
+    type: String,
+  },
+  location: {
+    type: String,
+  },
+  maximiumStudents: Number,
+  tutor: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Usuarios",
     },
-    description: {
-        type: String
-    },
-    entryTime: {
-        type: Date
-    },
-    entryDeadline: {
-        type: Date
-    },
-    departureTime: {
-        type: Date
-    },
-    area: {
-        type: String
-    },
-    location: {
-        type: String
-    },
-    tutor:[{
-        type: Schema.Types.ObjectId,
-        ref: 'Usuarios'
-    }]
-})
+  ],
+});
 
-export default model('Environment', EnvironmentSchema)
+export default model("Environment", EnvironmentSchema);

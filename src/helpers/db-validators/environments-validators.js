@@ -7,6 +7,14 @@ const isValidateEnvironmentExist = async (name) => {
     }
 }
 
+const isValidateEnvironmentExistById = async (id) => {
+    const environmentExist = await environment.findById( id )
+    if (!environmentExist) {
+        throw new Error(`El ambiente con el id: ${id} no existe`);
+    }
+}
+
 export {
-    isValidateEnvironmentExist
+    isValidateEnvironmentExist,
+    isValidateEnvironmentExistById
 }

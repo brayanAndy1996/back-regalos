@@ -6,6 +6,7 @@ import {
 import { isValidatePermissionExist } from "./permission-validator"
 import { isValidateRoleExist } from "./roles-validators"
 import { isValidateEnvironmentExist } from "./environments-validators"
+import { isImplementoExist } from "./implemento-validator"
 
 export {
     validateEmail,
@@ -13,5 +14,6 @@ export {
     isValidateUserExist,
     isValidatePermissionExist,
     isValidateRoleExist,
-    isValidateEnvironmentExist
+    isValidateEnvironmentExist,
+    isImplementoExist
 }

@@ -27,7 +27,8 @@ const UsersSchema = Schema({
         type: String
     },
     password: {
-        type: String
+        type: String,
+        select: false,
     },
     telefono: {
         type: String
@@ -41,18 +42,26 @@ const UsersSchema = Schema({
     sexo: {
         type: String
     },
-    ambiente: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Environment'
-    }],
     estado: {
         type: Boolean,
-        default: true
+        default: true,
+        required: true
     },
+    //Este campo verifica si esta inscrito o ya se vencio
+    isRegister:{
+        type: Boolean,
+        default: true,
+        required: true
+    },
+    ambienteActual: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Environment',
+        required: true
+    }],
     role: [{
         type: Schema.Types.ObjectId,
         ref: 'Role'
-    }],
+    }]
 })
 UsersSchema.methods.toJSON = function(){
     const { __v, password, _id, ...user } = this.toObject()

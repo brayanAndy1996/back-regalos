@@ -13,7 +13,7 @@ const getAssistance= async(req, res = response) => {
 
         const query = { createdAt: { $gte: '1970-01-01', $lte: todayLastHour } }
         if(startDateUTC) query.createdAt = { ...query.createdAt, $gte: startDateUTC }
-        if(endDateUTC) query.createdAt = { ...query.createdAt, $lte: endDateUTC }
+        if(endDateUTC) query.createdAt = { ...query.createdAt, $lte: dayjs(endDateUTC).endOf('day').format() }
         if(student) query.student = student
         if(checker) query.checker = checker
         if(environment) query.environment = environment

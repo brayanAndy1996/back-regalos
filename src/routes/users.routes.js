@@ -22,7 +22,6 @@ router.post(
     check('tipoDoc', 'El tipo de documento es obligatorio').not().isEmpty(),
     check('nombreCom', 'El nombre completo es obligatorio').not().isEmpty(),
     check('role', 'El rol no es valido').optional().isMongoId(),
-    check('ambiente', 'El ambiente no es valido').optional().isMongoId(),
     check('nroDoc').custom(isValidateUserExist),
     check('email').custom(validateEmail),
     validarSizeTelefono,
