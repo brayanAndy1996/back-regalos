@@ -8,7 +8,7 @@ const router = Router()
 
 router.get('/get-all-permissions', 
 [
-    validarjWT,
+    // validarjWT,
     // isHaveRole('ADMIN'),
     // validarCampos
 

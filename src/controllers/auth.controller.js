@@ -8,7 +8,7 @@ const loginController = async (req, res = response) => {
 
   try {
     //verificdar si el email existe
-    const usuario = await Usuario.findOne({ email });
+    const usuario = await Usuario.findOne({ email }).select("+password")
     if (!usuario)
       return res
         .status(400)

@@ -25,6 +25,26 @@ const getUsers = async(req, res) => {
         });
     }
 }
+const getAllUsers = async(req, res) => {
+    try {
+        const query = { estado: true };
+        const [total, usuarios] = await Promise.all([
+            Usuario.countDocuments(query),
+            Usuario.find(query)
+                .populate('role', 'name')
+                .populate('ambienteActual', 'name')
+        ]);
+        res.status(200).json({
+            total,
+            usuarios
+        });
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            errors: ['No se pudo obtener los usuarios de la base de datos']
+        });
+    }
+}
 
 const createUser = async (req, res = response) => {
     try {
@@ -90,6 +110,7 @@ const deleteUser = async (req, res = response) => {
 export {
     createUser,
     getUsers,
+    getAllUsers,
     updateUser,
     deleteUser
 }

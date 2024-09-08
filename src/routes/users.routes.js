@@ -2,16 +2,23 @@ import { Router } from "express";
 import { check } from "express-validator";
 import { validarCampos, isHaveRole, validarSizeTelefono, validarjWT } from "../middlewares";
 import { validateEmail, isValidateUserNoExist, isValidateUserExist } from "../helpers/db-validators";
-import { createUser, getUsers, updateUser, deleteUser } from "../controllers/users.controller";
+import { createUser, getUsers, updateUser, deleteUser, getAllUsers } from "../controllers/users.controller";
 
 const router = Router()
 
 router.get('/get-users',
 [
-    validarjWT,
+    // validarjWT,
     // isHaveRole('ADMIN'),
     validarCampos
 ], getUsers)
+
+router.get('/get-all-users',
+[
+    // validarjWT,
+    // isHaveRole('ADMIN'),
+    validarCampos
+], getAllUsers)
 
 router.post(
 '/create-user',
