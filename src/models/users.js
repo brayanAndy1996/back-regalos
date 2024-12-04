@@ -1,66 +1,40 @@
 import { Schema, model } from 'mongoose';
 
 const UsersSchema = Schema({
-    nroDoc: {
-        type: String,
-        required: true
-    },
-    tipoDoc: {
-        type: String,
-        required: true
-    },
     nombreCom: {
         nombre: {
             type: String,
-            required: true
+            required: [true, 'El nombre es requerido']
         },
         apellidoPat: {
-            type: String,
-            required: true
+            type: String
         },
         apellidoMat: {
-            type: String,
-            required: true
+            type: String
         }
     },
     email: {
-        type: String
+        type: String,
+        required: true,
+        unique: [true, 'El email es único']
     },
     password: {
         type: String,
         select: false,
-    },
-    telefono: {
-        type: String
-    },
-    direccion: {
-        type: String
-    },
-    fechaNac: {
-        type: Date
-    },
-    sexo: {
-        type: String
+        required: [true, 'La contraseña es requerida']
     },
     estado: {
         type: Boolean,
         default: true,
         required: true
     },
-    //Este campo verifica si esta inscrito o ya se vencio
-    isRegister:{
-        type: Boolean,
-        default: true,
-        required: true
-    },
-    ambienteActual: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Environment',
-        required: true
-    }],
     role: [{
         type: Schema.Types.ObjectId,
         ref: 'Role'
+    }],
+    productsFavorites:[{
+        type: Schema.Types.ObjectId,
+        ref: 'Producto'
     }]
 })
 UsersSchema.methods.toJSON = function(){

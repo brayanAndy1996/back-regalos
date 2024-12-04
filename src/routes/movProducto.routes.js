@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { check, query } from "express-validator";
 import { validarCampos, validarjWT, isHaveRole } from "../middlewares";
-import { getAllMovimientos, createMovimiento, getMovimiento } from "../controllers/movImplemento.controller";
+import { getAllMovimientos, createMovimiento, getMovimiento } from "../controllers/movProducto.controller";
 import { isImplementoExistById } from "../helpers/db-validators/implemento-validator";
 import { isValidateUserExistById } from "../helpers/db-validators/user-validator";
 

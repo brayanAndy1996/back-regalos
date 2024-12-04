@@ -12,18 +12,18 @@ const loginController = async (req, res = response) => {
     if (!usuario)
       return res
         .status(400)
-        .json({ msg: "Usuario/ password no son correctos- correo" });
+        .json({ errors: ["Usuario/ password no son correctos- correo"] });
     //si el usuario esta activo
     if (!usuario.estado)
       return res
         .status(400)
-        .json({ msg: "Usuario/ password no son correctos- estado:false" });
+        .json({ errors: ["Usuario/ password no son correctos- estado:false"] });
     //Verificar la contraseñla
     const validatePassword = bcryptjs.compareSync(password, usuario.password);
     if (!validatePassword)
       return res
         .status(400)
-        .json({ msg: "Usuario/ password no son correctos- password" });
+        .json({ errors: ["Usuario/ password no son correctos- password"] });
     //Generar el jwt
     const token = await generateJWT(usuario.id);
     res.json({
@@ -36,7 +36,7 @@ const loginController = async (req, res = response) => {
       error
     );
     return res.status(500).json({
-      msg: "Algo salio mal :(",
+      errors: ["Algo salio mal :("],
     });
   }
 };

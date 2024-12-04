@@ -26,9 +26,22 @@ const isValidateUserExistById = async ( id ) => {
     if ( !existeUsuario ) throw new Error(`El usuario ${ id } no existe`)
 }
 
+const isValidateUserExistByEmail = async ( email ) => {
+    const existeUsuario = await Usuarios.findOne({ email })
+    if ( existeUsuario ) throw new Error(`El usuario con el correo:${ email } existe`)
+}
+
+const isValidateUserNoExistByEmail = async (_, { req }) => {
+    const { email } = req.params
+    const existeUsuario = await Usuarios.findOne({ email })
+    if ( !existeUsuario ) throw new Error(`El usuario con el correo:${ email } no existe`)
+}
+
 export {
     validateEmail,
     isValidateUserNoExist,
     isValidateUserExist,
-    isValidateUserExistById
+    isValidateUserExistById,
+    isValidateUserExistByEmail,
+    isValidateUserNoExistByEmail
 }

@@ -1,12 +1,13 @@
 import {
     validateEmail,
     isValidateUserNoExist,
-    isValidateUserExist
+    isValidateUserExist,
+    isValidateUserExistByEmail,
+    isValidateUserNoExistByEmail
 } from "./user-validator"
 import { isValidatePermissionExist } from "./permission-validator"
 import { isValidateRoleExist } from "./roles-validators"
-import { isValidateEnvironmentExist } from "./environments-validators"
-import { isImplementoExist } from "./implemento-validator"
+import { validateProductExistByNombre } from "./producto-validator"
 
 export {
     validateEmail,
@@ -14,6 +15,7 @@ export {
     isValidateUserExist,
     isValidatePermissionExist,
     isValidateRoleExist,
-    isValidateEnvironmentExist,
-    isImplementoExist
+    isValidateUserExistByEmail,
+    isValidateUserNoExistByEmail,
+    validateProductExistByNombre
 }

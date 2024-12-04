@@ -1,14 +1,14 @@
 import { Schema, model } from 'mongoose';
 
-const MovImplementoSchema = Schema({
+const MovProductoSchema = Schema({
     cantidad : {
         type: Number,
-        required: true
+        required: [true, 'Se necesita una cantidad']
     },
     //adicionar,disminuir
     tipoMovimiento: {
         type: String,
-        required: true
+        required: [true, 'Se necesita un tipo de movimiento']
     },
     fechaMovimiento: {
         type: Date,
@@ -17,13 +17,13 @@ const MovImplementoSchema = Schema({
     usuario: {
         type: Schema.Types.ObjectId,
         ref: 'Users',
-        required: true
+        required: [true, 'Se necesita un usuario']
     },
-    implemento: {
+    producto: {
         type: Schema.Types.ObjectId,
-        ref: 'Implemento',
-        required: true
+        ref: 'Producto',
+        required: [true, 'Se necesita un producto']
     }
 })
 
-export default model('MovImplemento', MovImplementoSchema)
+export default model('MovProducto', MovProductoSchema)

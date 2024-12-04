@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { check } from "express-validator";
-import { validarCampos, isHaveRole, validarSizeTelefono, validarjWT } from "../middlewares";
-import { validateEmail, isValidateUserNoExist, isValidateUserExist } from "../helpers/db-validators";
+import { validarCampos, validarjWT } from "../middlewares";
+import { validateEmail, isValidateUserNoExistByEmail } from "../helpers/db-validators";
 import { createUser, getUsers, updateUser, deleteUser, getAllUsers } from "../controllers/users.controller";
 
 const router = Router()
@@ -25,31 +25,25 @@ router.post(
 [
     validarjWT,
     // isHaveRole('ADMIN'),
-    check('nroDoc', 'El número de documento es obligatorio').not().isEmpty(),
-    check('tipoDoc', 'El tipo de documento es obligatorio').not().isEmpty(),
-    check('nombreCom', 'El nombre completo es obligatorio').not().isEmpty(),
     check('role', 'El rol no es valido').optional().isMongoId(),
-    check('nroDoc').custom(isValidateUserExist),
     check('email').custom(validateEmail),
-    validarSizeTelefono,
     validarCampos
 ],createUser)
 
-router.put('/update-user/:nroDocParam/:tipoDocParam', 
+router.put('/update-user/:email', 
 [
     // validarjWT,
     // isHaveRole('ADMIN'),
-    check('nroDoc').custom(isValidateUserNoExist),
+    // check('email').custom(isValidateUserExistByEmail),
     check('role', 'El rol no es valido').optional().isMongoId(),
-    check('ambiente', 'El ambiente no es valido').optional().isMongoId(),
     validarCampos
 ], updateUser)
 
-router.delete('/delete-user/:nroDocParam/:tipoDocParam',
+router.delete('/delete-user/:email',
 [
     validarjWT,
     // isHaveRole('ADMIN'),
-    check('nroDoc').custom(isValidateUserNoExist),
+    check('email').custom(isValidateUserNoExistByEmail),
     validarCampos
 ], deleteUser)
 

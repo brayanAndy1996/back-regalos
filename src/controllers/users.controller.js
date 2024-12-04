@@ -12,7 +12,6 @@ const getUsers = async(req, res) => {
                 .skip(Number(from))
                 .limit(Number(limit))
                 .populate('role', 'name')
-                .populate('ambienteActual', 'name')
         ]);
         res.status(200).json({
             total,
@@ -32,7 +31,6 @@ const getAllUsers = async(req, res) => {
             Usuario.countDocuments(query),
             Usuario.find(query)
                 .populate('role', 'name')
-                .populate('ambienteActual', 'name')
         ]);
         res.status(200).json({
             total,
@@ -48,8 +46,9 @@ const getAllUsers = async(req, res) => {
 
 const createUser = async (req, res = response) => {
     try {
-        const { nroDoc, tipoDoc, nombreCom, role, email, password, telefono, direccion, fechaNac, sexo, ambienteActual  } = req.body;
-        const usuario = new Usuario({ nroDoc, tipoDoc, nombreCom, role, email, password, telefono, direccion, fechaNac, sexo, ambienteActual });
+        const { nombreCom, role, email, password } = req.body;
+        console.log("🚀 ~ createUser ~ nombreCom:", nombreCom)
+        const usuario = new Usuario({ nombreCom, role, email, password });
         
         //Encriptar la contraseña
         if(password){
@@ -59,9 +58,8 @@ const createUser = async (req, res = response) => {
         
         //Guardar en DB
         await usuario.save();
-        const newUser = await Usuario.findOne({nroDoc, tipoDoc})
+        const newUser = await Usuario.findOne({nombreCom})
                                 .populate('role', 'name')
-                                .populate('ambienteActual', 'name')
         
         res.status(200).json(newUser);
     } catch (error) {
@@ -74,14 +72,31 @@ const createUser = async (req, res = response) => {
 
 const updateUser = async (req, res = response) => {
     try {
-        const { nroDocParam, tipoDocParam } = req.params;
-        const { password, nroDoc, tipoDoc, ...resto } = req.body;
+        const { email } = req.params;
+        const { password, email: email2, ...resto } = req.body;
         if(password){
             const salt = bcryptjs.genSaltSync();
             resto.password = bcryptjs.hashSync(password, salt);
         }
-        const usuario = await Usuario.findOneAndUpdate({nroDoc: nroDocParam, tipoDoc: tipoDocParam}, resto)
-                                    .populate('ambienteActual', 'name')
+        const usuario = await Usuario.findOneAndUpdate({ email }, resto, {new: true})
+                                    .populate('role', 'name');
+        res.status(200).json({
+            usuario
+        });
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            errors: ['No se pudo actualizar el usuario en la base de datos']
+        });
+    }
+}
+
+const setLikeProduct = async (req, res = response) => {
+    try {
+        const { email } = req.params;
+        const { products } = req.body;
+        //productsFavorites
+        const usuario = await Usuario.findOneAndUpdate({ email }, {productsFavorites:products})
                                     .populate('role', 'name');
         res.status(200).json({
             usuario
@@ -96,8 +111,8 @@ const updateUser = async (req, res = response) => {
 
 const deleteUser = async (req, res = response) => {
     try {
-        const { nroDocParam, tipoDocParam } = req.params;
-        const usuario = await Usuario.findOneAndUpdate({nroDoc: nroDocParam, tipoDoc: tipoDocParam}, {estado: false})
+        const { email } = req.params;
+        const usuario = await Usuario.findOneAndUpdate({ email }, {estado: false})
         res.status(200).json(usuario);
     } catch (error) {
         console.log(error)
